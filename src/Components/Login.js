@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import './Login.css';
+import { login } from '../Components/api.js';
+import { AuthContext } from './AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { setIsAuthenticated, setUserRole } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then(response => response.json())
+    setError(''); 
+    login({ email, password })
       .then(data => {
         if (data.id) {
-          navigate('/profile');
+          setIsAuthenticated(true);
+          setUserRole(data.is_admin ? 'admin' : data.is_retailer ? 'retailer' : 'user');
+          navigate('/');
         } else {
-          // handle errors
+          setError('Invalid credentials');
+          alert('Invalid credentials'); 
         }
+      })
+      .catch(err => {
+        setError('Invalid credentials');
+        alert('Invalid credentials'); 
       });
   };
 
   return (
     <div className="login-form">
       <h2>Login</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleLogin}>
         <label>
           Email:

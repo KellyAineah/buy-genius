@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Signup.css';
+import { signup } from '../Components/api.js';
 
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isRetailer, setIsRetailer] = useState(false);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
   const handleSignup = (e) => {
     e.preventDefault();
-    fetch('/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, email, password, is_retailer: isRetailer }),
-    })
-      .then(response => response.json())
+    signup({ username, email, password, is_retailer: isRetailer })
       .then(data => {
         if (data.id) {
-          navigate('/login');
+          if (data.is_retailer) {
+            setMessage('Your account has been created. Please wait for admin approval before you can start selling.');
+          } else {
+            navigate('/login');
+          }
         } else {
-          // handle errors
+          setMessage('Signup failed. Please try again.');
         }
       });
   };
@@ -31,6 +29,7 @@ const Signup = () => {
   return (
     <div className="signup-form">
       <h2>Sign Up</h2>
+      {message && <p>{message}</p>}
       <form onSubmit={handleSignup}>
         <label>
           Username:
