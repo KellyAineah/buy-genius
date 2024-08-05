@@ -13,6 +13,13 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     setError(''); 
+
+    // validation
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
+    }
+
     login({ email, password })
       .then(data => {
         if (data.id) {

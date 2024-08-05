@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from '../Components/api.js';
+import './Signup.css'; // Import the CSS file
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -8,10 +9,25 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [isRetailer, setIsRetailer] = useState(false);
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const validate = () => {
+    const newErrors = {};
+    if (!username) newErrors.username = 'Username is required';
+    if (!email) newErrors.email = 'Email is required';
+    if (!password) newErrors.password = 'Password is required';
+    return newErrors;
+  };
 
   const handleSignup = (e) => {
     e.preventDefault();
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
     signup({ username, email, password, is_retailer: isRetailer })
       .then(data => {
         if (data.id) {
@@ -38,6 +54,7 @@ const Signup = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {errors.username && <p className="error">{errors.username}</p>}
         </label>
         <label>
           Email:
@@ -46,6 +63,7 @@ const Signup = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <p className="error">{errors.email}</p>}
         </label>
         <label>
           Password:
@@ -54,6 +72,7 @@ const Signup = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errors.password && <p className="error">{errors.password}</p>}
         </label>
         <label>
           Retailer:
