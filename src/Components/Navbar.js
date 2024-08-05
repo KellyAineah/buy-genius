@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import ThemeSwitcher from './ThemeSwitcher'
+import ThemeSwitcher from './ThemeSwitcher';
 import './Navbar.css';
 
 const Navbar = ({ isAuthenticated, theme, toggleTheme }) => {
@@ -26,7 +26,11 @@ const Navbar = ({ isAuthenticated, theme, toggleTheme }) => {
   }, []);
 
   const handleLogout = () => {
-    navigate('/login');
+    fetch('/logout', { method: 'DELETE' })
+      .then(response => response.json())
+      .then(() => {
+        navigate('/login');
+      });
   };
 
   return (
@@ -68,7 +72,7 @@ const Navbar = ({ isAuthenticated, theme, toggleTheme }) => {
           </>
         )}
         <li>
-          <ThemeSwitcher isDark={theme === "dark"} onChange={() => toggleTheme()} /> {/* Add ThemeSwitcher */}
+          <ThemeSwitcher isDark={theme === "dark"} onChange={() => toggleTheme()} /> 
         </li>
       </ul>
     </nav>

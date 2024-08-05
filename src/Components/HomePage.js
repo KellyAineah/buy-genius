@@ -1,15 +1,11 @@
+import React from 'react'
 
-import React from 'react';
-
-
-const HomePage = () => {
+function HomePage() {
   return (
     <div>
       
-      
-      
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage
