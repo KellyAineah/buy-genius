@@ -8,7 +8,7 @@ import Signup from './Components/Signup';
 import Profile from './Components/Profile';
 import AdminDashboard from './Components/AdminDashboard';
 import RetailerDashboard from './Components/RetailerDashboard';
-import MyProducts from './Components/MyProducts'; // Import MyProducts component
+import MyProducts from './Components/MyProducts'; 
 import Navbar from './Components/Navbar';
 import Header from './Components/Header';
 import { AuthProvider } from './Components/AuthContext';
