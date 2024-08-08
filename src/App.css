@@ -6,5 +6,11 @@ body {
   }
   .app {
     transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
-  
+  .main-content {
+    flex: 1;
+    padding-bottom: 20px;
+  }

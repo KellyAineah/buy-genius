@@ -7,6 +7,10 @@ const MyProducts = () => {
   const [editingProductId, setEditingProductId] = useState(null);
 
   useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = () => {
     fetchMyProducts()
       .then(data => {
         if (Array.isArray(data.products)) {
@@ -19,7 +23,7 @@ const MyProducts = () => {
         console.error('Failed to fetch products:', error);
         setProducts([]); 
       });
-  }, []);
+  };
 
   const handleDelete = (productId) => {
     deleteProduct(productId)
@@ -33,21 +37,15 @@ const MyProducts = () => {
 
   const handleSuccess = () => {
     setEditingProductId(null);
-    fetchMyProducts().then(data => {
-      if (Array.isArray(data.products)) {
-        setProducts(data.products);
-      } else {
-        setProducts([]);
-      }
-    });
+    loadProducts();
   };
 
   return (
     <div className="my-products">
       <h2>My Products</h2>
-      <button onClick={() => setEditingProductId(null)}>Add New Product</button>
-      {editingProductId !== null && (
-        <ProductForm productId={editingProductId} onSuccess={handleSuccess} />
+      <button onClick={() => setEditingProductId('new')}>Add New Product</button>
+      {editingProductId === 'new' && (
+        <ProductForm onSuccess={handleSuccess} />
       )}
       {products.length > 0 ? (
         <ul>

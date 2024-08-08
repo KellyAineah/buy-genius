@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5000'; 
+const BASE_URL = 'http://localhost:5000';
 
 // function to handle responses
 const handleResponse = (response) => {
@@ -13,7 +13,7 @@ const handleResponse = (response) => {
 
 // function to handle errors
 const handleError = (error) => {
-  console.error('API call failed:', error);
+  console.error('API call failed:', error.message);
   throw error; 
 };
 
@@ -24,7 +24,7 @@ export const signup = (data) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-    credentials: 'include', 
+    credentials: 'include',
   })
     .then(handleResponse)
     .catch(handleError);
@@ -59,7 +59,7 @@ export const logout = () => {
   })
     .then(response => {
       if (response.ok) {
-        return {}; 
+        return {};
       } else {
         return response.json().then((error) => {
           throw new Error(error.message || 'Logout failed');
@@ -69,7 +69,6 @@ export const logout = () => {
     .catch(handleError);
 };
 
-// fetchMyProducts function
 export const fetchMyProducts = () => {
   return fetch(`${BASE_URL}/retailer_dashboard`, {
     method: 'GET',
@@ -79,7 +78,6 @@ export const fetchMyProducts = () => {
     .catch(handleError);
 };
 
-// deleteProduct function
 export const deleteProduct = (productId) => {
   return fetch(`${BASE_URL}/products/${productId}`, {
     method: 'DELETE',
@@ -88,7 +86,9 @@ export const deleteProduct = (productId) => {
     .then(handleResponse)
     .catch(handleError);
 };
+
 export const addProduct = (data) => {
+  console.log('Adding product with data:', data);
   return fetch(`${BASE_URL}/products`, {
     method: 'POST',
     headers: {
@@ -122,6 +122,7 @@ export const fetchProduct = (productId) => {
     .then(handleResponse)
     .catch(handleError);
 };
+
 export const fetchAllProducts = () => {
   return fetch(`${BASE_URL}/products`, {
     method: 'GET',
@@ -131,3 +132,28 @@ export const fetchAllProducts = () => {
     .catch(handleError);
 };
 
+export const addToWishlist = (productId) => {
+  return fetch(`${BASE_URL}/wishlist`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ product_id: productId }),
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const sendMessage = (data) => {
+  return fetch(`${BASE_URL}/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};

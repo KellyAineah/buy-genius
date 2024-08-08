@@ -83,9 +83,10 @@ const Navbar = ({ theme, toggleTheme }) => {
         <>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/products">Explore Products</Link></li>
+          <li><Link to="/about">About</Link></li>
           <li><Link to="/retailer_dashboard">Dashboard</Link></li>
           <li><Link to="/my_products">My Products</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
+          <li><Link to="/profile">Retailer Profile</Link></li>
           <li><Link to="/messages">Messages</Link></li>
           <li><button className="btn btn-logout" onClick={handleLogout}>Logout</button></li>
         </>
