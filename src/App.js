@@ -28,7 +28,7 @@ const App = () => {
           <Navbar theme={theme} toggleTheme={toggleTheme} />
           <div className="main-content">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<div className="homepage-wrapper"><HomePage /></div>}/>
               <Route path="/products" element={<Products />} />
               <Route path="/about" element={<About />} />
               <Route path="/login" element={<Login />} />

@@ -6,7 +6,7 @@
   text-align: center;
   position: relative;
   width: 100%;
-  margin-top: 300px;
+  margin-top: 100px;
 }
 
 .footer-container {
@@ -66,4 +66,10 @@
 
 .app.dark .footer-bottom {
   background-color: #020101; 
+}
+
+
+.homepage-wrapper .footer-container {
+  margin-top: 0px; 
+  padding-top: 0px;
 }
