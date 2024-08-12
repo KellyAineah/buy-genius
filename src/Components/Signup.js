@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signup } from '../Components/api.js';
+import { signup } from '../Components/api';
 import './Signup.css';
 
 const Signup = () => {
@@ -10,6 +10,7 @@ const Signup = () => {
   const [isRetailer, setIsRetailer] = useState(false);
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const validate = () => {
@@ -22,14 +23,18 @@ const Signup = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
+    setMessage('');
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
     setErrors({});
+    setLoading(true);
+
     signup({ username, email, password, is_retailer: isRetailer })
       .then(data => {
+        setLoading(false);
         if (data.id) {
           if (data.is_retailer) {
             setMessage('Your account has been created. Please wait for admin approval before you can start selling.');
@@ -37,8 +42,12 @@ const Signup = () => {
             navigate('/login');
           }
         } else {
-          setMessage('Signup failed. Please try again.');
+          setMessage(data.error || 'Signup failed. Please try again.');
         }
+      })
+      .catch(() => {
+        setLoading(false);
+        setMessage('An error occurred. Please try again.');
       });
   };
 
@@ -53,6 +62,7 @@ const Signup = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            disabled={loading}
           />
           {errors.username && <p className="error">{errors.username}</p>}
         </label>
@@ -62,6 +72,7 @@ const Signup = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
           {errors.email && <p className="error">{errors.email}</p>}
         </label>
@@ -71,6 +82,7 @@ const Signup = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
           />
           {errors.password && <p className="error">{errors.password}</p>}
         </label>
@@ -80,9 +92,12 @@ const Signup = () => {
             type="checkbox"
             checked={isRetailer}
             onChange={(e) => setIsRetailer(e.target.checked)}
+            disabled={loading}
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Signing up...' : 'Sign Up'}
+        </button>
       </form>
     </div>
   );

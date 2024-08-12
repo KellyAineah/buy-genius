@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
-import { addProduct } from '../Components/api.js';
+import React, { useState, useEffect } from 'react';
+import { addProduct, updateProduct, fetchCategories } from '../Components/api.js';
+import './ProductForm.css'
 
-const ProductForm = ({ onSuccess }) => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [deliveryCost, setDeliveryCost] = useState('');
-  const [paymentMode, setPaymentMode] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+const ProductForm = ({ initialProduct = {}, onSuccess, isEdit = false }) => {
+  const [name, setName] = useState(initialProduct.name || '');
+  const [price, setPrice] = useState(initialProduct.price || '');
+  const [description, setDescription] = useState(initialProduct.description || '');
+  const [deliveryCost, setDeliveryCost] = useState(initialProduct.delivery_cost || '');
+  const [paymentMode, setPaymentMode] = useState(initialProduct.payment_mode || '');
+  const [categoryId, setCategoryId] = useState(initialProduct.category_id || '');
+  const [imageUrl, setImageUrl] = useState(initialProduct.image_url || '');
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchCategories()
+      .then(data => {
+        setCategories(data);
+        if (!initialProduct.category_id && data.length > 0) {
+          setCategoryId(data[0].id);
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch categories:', error);
+      });
+  }, [initialProduct]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,16 +35,26 @@ const ProductForm = ({ onSuccess }) => {
       delivery_cost: parseFloat(deliveryCost),
       payment_mode: paymentMode,
       category_id: parseInt(categoryId),
-      image_url: imageUrl
+      image_url: imageUrl,
     };
 
-    addProduct(productData)
-      .then((response) => {
-        onSuccess();
-      })
-      .catch((error) => {
-        console.error('Failed to add product:', error);
-      });
+    if (isEdit) {
+      updateProduct(initialProduct.id, productData)
+        .then(() => {
+          onSuccess();
+        })
+        .catch((error) => {
+          console.error('Failed to update product:', error);
+        });
+    } else {
+      addProduct(productData)
+        .then(() => {
+          onSuccess();
+        })
+        .catch((error) => {
+          console.error('Failed to add product:', error);
+        });
+    }
   };
 
   return (
@@ -55,14 +80,20 @@ const ProductForm = ({ onSuccess }) => {
         <input type="text" value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} required />
       </label>
       <label>
-        Category ID:
-        <input type="number" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required />
+        Category:
+        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         Image URL:
         <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
       </label>
-      <button type="submit">Add Product</button>
+      <button type="submit">{isEdit ? 'Update Product' : 'Add Product'}</button>
     </form>
   );
 };

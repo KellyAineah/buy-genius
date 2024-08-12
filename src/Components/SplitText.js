@@ -13,7 +13,7 @@ export const SplitText = ({ text, className = '', delay = 100 }) => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          observer.unobserve(ref.current); // Unobserve after triggering the animation
+          observer.unobserve(ref.current); 
         }
       },
       { threshold: 0.1, rootMargin: '-100px' }

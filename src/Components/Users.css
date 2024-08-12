@@ -1,0 +1,115 @@
+/* Default light mode styles */
+.unique-users-container {
+    padding: 20px;
+    background-color: #ffffff;
+    color: #333;
+  }
+  
+  .unique-users-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .unique-users-search-input,
+  .unique-users-role-select {
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .unique-users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .unique-users-table th,
+  .unique-users-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .unique-users-table th {
+    background-color: #f4f4f4;
+    text-align: left;
+  }
+  
+  .unique-users-action-button {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .unique-users-view-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .unique-users-delete-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .unique-custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .unique-custom-modal {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .unique-users-close-button {
+    background-color: #555;
+    color: white;
+    margin-top: 20px;
+  }
+  
+  /* Dark mode styles */
+  .unique-users-container.dark-theme {
+    background-color: #333;
+    color: #f4f4f4;
+  }
+  
+  .unique-users-table.dark-theme th,
+  .unique-users-table.dark-theme td {
+    border: 1px solid #666;
+  }
+  
+  .unique-users-table.dark-theme th {
+    background-color: #444;
+  }
+  
+  .unique-custom-modal.dark-theme {
+    background-color: #444;
+    color: #f4f4f4;
+  }
+  
+  .unique-users-action-button.dark-theme {
+    background-color: #555;
+    color: #f4f4f4;
+  }
+  
+  .unique-users-view-button.dark-theme {
+    background-color: #2E7D32;
+  }
+  
+  .unique-users-delete-button.dark-theme {
+    background-color: #C62828;
+  }
+  

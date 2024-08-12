@@ -1,16 +1,23 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { sendMessage } from './api'; // Ensure this path matches your actual path
+import { sendMessage } from './api'; 
 import './ProductModal.css';
 
 const ProductModal = ({ product, onClose }) => {
   const { user } = useContext(AuthContext);
   const [messageContent, setMessageContent] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSendMessage = (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setErrorMessage('You need to log in to send a message.');
+      return;
+    }
+
     const messageData = {
-      receiver_id: product.retailer.user_id, // Ensure this is correct
+      receiver_id: product.retailer.user_id, 
       product_id: product.id,
       content: messageContent,
     };
@@ -19,9 +26,11 @@ const ProductModal = ({ product, onClose }) => {
       .then(response => {
         console.log('Message sent:', response);
         setMessageContent('');
+        setErrorMessage('');
       })
       .catch(error => {
         console.error('Failed to send message:', error);
+        setErrorMessage('Failed to send message. Please try again.');
       });
   };
 
@@ -35,9 +44,9 @@ const ProductModal = ({ product, onClose }) => {
         <p>Price: {product.price}</p>
         <p>Delivery Cost: {product.delivery_cost}</p>
         <p>Payment Mode: {product.payment_mode}</p>
-        <p>Retailer: {product.retailer_name}</p> 
+        <p>Retailer: {product.retailer_name}</p>
 
-        {user && !user.is_retailer && (
+        {user && !user.is_retailer ? (
           <form onSubmit={handleSendMessage} className="message-form">
             <textarea
               value={messageContent}
@@ -46,7 +55,10 @@ const ProductModal = ({ product, onClose }) => {
               required
             />
             <button type="submit">Send Message</button>
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
           </form>
+        ) : (
+          <p></p>
         )}
       </div>
     </div>

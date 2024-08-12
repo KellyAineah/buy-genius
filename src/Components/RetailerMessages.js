@@ -29,7 +29,7 @@ const RetailerMessages = () => {
       .then(response => {
         console.log('Reply sent:', response);
         setReplyContent('');
-        // Optionally update the messages list
+        
       })
       .catch(error => {
         console.error('Failed to send reply:', error);

@@ -15,6 +15,6 @@ body {
     padding-bottom: 20px;
   }
   .homepage-wrapper + .footer-container{
-    margin-top: 0px; 
-    padding-top: 500px; 
+    margin-top: 500px; 
+    
 }

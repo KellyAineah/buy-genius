@@ -1,17 +1,19 @@
 const BASE_URL = 'http://localhost:5000';
 
-// function to handle responses
+// Function to handle responses
 const handleResponse = (response) => {
   if (response.ok) {
     return response.json().catch(() => ({})); 
   } else {
     return response.json().then((error) => {
-      throw new Error(error.message || 'Something went wrong');
+      throw new Error(error.message || `Error ${response.status}: ${response.statusText}`);
+    }).catch(() => {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
     });
   }
 };
 
-// function to handle errors
+// Function to handle errors
 const handleError = (error) => {
   console.error('API call failed:', error.message);
   throw error; 
@@ -88,7 +90,6 @@ export const deleteProduct = (productId) => {
 };
 
 export const addProduct = (data) => {
-  console.log('Adding product with data:', data);
   return fetch(`${BASE_URL}/products`, {
     method: 'POST',
     headers: {
@@ -157,3 +158,138 @@ export const sendMessage = (data) => {
     .then(handleResponse)
     .catch(handleError);
 };
+
+export const fetchPendingRetailers = () => {
+  return fetch(`${BASE_URL}/admin_dashboard`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const approveRetailer = (retailerId) => {
+  return fetch(`${BASE_URL}/approve_retailer/${retailerId}`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const rejectRetailer = (retailerId) => {
+  return fetch(`${BASE_URL}/reject_retailer/${retailerId}`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const fetchUsers = ({ role, status, search }) => {
+  const query = new URLSearchParams();
+  if (role) query.append('role', role);
+  if (status) query.append('status', status);
+  if (search) query.append('search', search);
+
+  return fetch(`${BASE_URL}/users?${query.toString()}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const fetchRetailers = ({ status, search }) => {
+  const query = new URLSearchParams();
+  if (status) query.append('status', status);
+  if (search) query.append('search', search);
+
+  return fetch(`${BASE_URL}/retailers?${query.toString()}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const deleteUser = (userId) => {
+  return fetch(`${BASE_URL}/users/${userId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+
+export const fetchCategories = () => {
+  return fetch(`${BASE_URL}/categories`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const fetchUserProfile = (userId) => {
+  return fetch(`${BASE_URL}/users/${userId}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .then(data => {
+      if (!data || Object.keys(data).length === 0) {
+        throw new Error('Profile data is empty');
+      }
+      return data;
+    })
+    .catch(handleError);
+};
+
+
+
+
+export const fetchAllCategories = () => {
+  return fetch(`${BASE_URL}/categories`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const recordSearchHistory = (searchTerm) => {
+  return fetch('http://localhost:5000/search_history', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ search_term: searchTerm }),
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const fetchSearchHistory = () => {
+  return fetch('http://localhost:5000/search_history', {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const fetchMessages = () => {
+  return fetch(`${BASE_URL}/messages`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+
+
+
