@@ -1,35 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import { addProduct, updateProduct, fetchProduct } from '../Components/api.js';
+import { addProduct, updateProduct, fetchCategories } from '../Components/api.js';
+import './ProductForm.css'
 
-const ProductForm = ({ productId, onSuccess }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+const ProductForm = ({ initialProduct = {}, onSuccess, isEdit = false }) => {
+  const [name, setName] = useState(initialProduct.name || '');
+  const [price, setPrice] = useState(initialProduct.price || '');
+  const [description, setDescription] = useState(initialProduct.description || '');
+  const [deliveryCost, setDeliveryCost] = useState(initialProduct.delivery_cost || '');
+  const [paymentMode, setPaymentMode] = useState(initialProduct.payment_mode || '');
+  const [categoryId, setCategoryId] = useState(initialProduct.category_id || '');
+  const [imageUrl, setImageUrl] = useState(initialProduct.image_url || '');
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (productId) {
-      fetchProduct(productId).then(product => {
-        setName(product.name);
-        setDescription(product.description);
-        setPrice(product.price);
-        setCategory(product.category_id);
-        setImageUrl(product.image_url);
+    fetchCategories()
+      .then(data => {
+        setCategories(data);
+        if (!initialProduct.category_id && data.length > 0) {
+          setCategoryId(data[0].id);
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch categories:', error);
       });
-    }
-  }, [productId]);
+  }, [initialProduct]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const productData = { name, description, price, category_id: category, image_url: imageUrl };
-    const action = productId ? updateProduct : addProduct;
-    
-    action(productId, productData).then(() => {
-      onSuccess();
-    }).catch(error => {
-      console.error('Failed to save product:', error);
-    });
+
+    const productData = {
+      name,
+      price: parseFloat(price),
+      description,
+      delivery_cost: parseFloat(deliveryCost),
+      payment_mode: paymentMode,
+      category_id: parseInt(categoryId),
+      image_url: imageUrl,
+    };
+
+    if (isEdit) {
+      updateProduct(initialProduct.id, productData)
+        .then(() => {
+          onSuccess();
+        })
+        .catch((error) => {
+          console.error('Failed to update product:', error);
+        });
+    } else {
+      addProduct(productData)
+        .then(() => {
+          onSuccess();
+        })
+        .catch((error) => {
+          console.error('Failed to add product:', error);
+        });
+    }
   };
 
   return (
@@ -39,22 +64,36 @@ const ProductForm = ({ productId, onSuccess }) => {
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
       </label>
       <label>
-        Description:
-        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required />
-      </label>
-      <label>
         Price:
         <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
       </label>
       <label>
+        Description:
+        <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required />
+      </label>
+      <label>
+        Delivery Cost:
+        <input type="number" value={deliveryCost} onChange={(e) => setDeliveryCost(e.target.value)} required />
+      </label>
+      <label>
+        Payment Mode:
+        <input type="text" value={paymentMode} onChange={(e) => setPaymentMode(e.target.value)} required />
+      </label>
+      <label>
         Category:
-        <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} required />
+        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         Image URL:
         <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
       </label>
-      <button type="submit">{productId ? 'Update' : 'Add'} Product</button>
+      <button type="submit">{isEdit ? 'Update Product' : 'Add Product'}</button>
     </form>
   );
 };

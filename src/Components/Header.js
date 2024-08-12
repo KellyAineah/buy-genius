@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="header">
       <p>
-        Welcome! 👋 Enjoy exploring our products and share with your friends!</p>
+         👋 Enjoy exploring our products and share with your friends!</p>
     </header>
   );
 };

@@ -1,0 +1,87 @@
+
+.admin-dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 85px;
+  }
+  
+  
+  .admin-dashboard h2 {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+  
+  
+  .admin-dashboard .error {
+    color: #dc3545;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  
+  .admin-dashboard ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .admin-dashboard li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-dashboard li:hover {
+    background-color: #e9ecef;
+  }
+  
+  
+  .admin-dashboard button {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .admin-dashboard button.approve {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .admin-dashboard button.reject {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .admin-dashboard button.approve:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+  }
+  
+  .admin-dashboard button.reject:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  
+  .admin-dashboard button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  
