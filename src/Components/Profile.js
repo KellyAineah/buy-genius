@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { fetchUserProfile } from '../Components/api.js';
 import { AuthContext } from './AuthContext';
-//import './Profile.css';
+import './Profile.css';
 
 const Profile = () => {
   const [user, setUser] = useState({
