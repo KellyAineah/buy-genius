@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { fetchAllProducts, fetchAllCategories, recordSearchHistory } from './api.js';
+import React, { useState, useEffect, useContext } from 'react';
+import { fetchAllProducts, fetchAllCategories, recordSearchHistory } from './api';  // Removed sendMessage import
 import './Products.css';
 import ProductModal from './ProductModal';
+import ChatCard from './ChatCard';
+import { AuthContext } from './AuthContext';
 
 const Products = ({ theme }) => {
   const [products, setProducts] = useState([]);
@@ -11,6 +13,9 @@ const Products = ({ theme }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [activeChat, setActiveChat] = useState(null);
+
+  const { userId } = useContext(AuthContext);
 
   useEffect(() => {
     fetchAllProducts()
@@ -83,6 +88,10 @@ const Products = ({ theme }) => {
     setSelectedProduct(null);
   };
 
+  const handleChatWithRetailer = (retailerName, retailerId, productId) => {
+    setActiveChat({ retailerName, retailerId, productId });
+  };
+
   return (
     <div className={`products-container ${theme}`}>
       <div className="header-product">
@@ -115,9 +124,15 @@ const Products = ({ theme }) => {
               <img src={product.image_url} alt={product.name} className="product-image" />
               <h3>{product.name}</h3>
               <p>Price: Ksh.{product.price}</p>
-              <p>Retailer: {product.retailer_name || 'Unknown'}</p> 
+              <p>Retailer: {product.retailer_name || 'Unknown'}</p>
               {product.recommended && <button className="recommended-btn">Recommended</button>}
               <button className="more-details-btn" onClick={() => handleCardClick(product)}>See More Details</button>
+              <button 
+                className="chat-retailer-btn" 
+                onClick={() => handleChatWithRetailer(product.retailer_name || 'Unknown', product.retailer_id, product.id)}
+              >
+                Chat with Retailer
+              </button>
             </div>
           ))
         ) : (
@@ -127,8 +142,15 @@ const Products = ({ theme }) => {
       {isModalOpen && selectedProduct && (
         <ProductModal product={selectedProduct} onClose={closeModal} />
       )}
+      {activeChat && (
+        <ChatCard 
+        retailerName={activeChat.retailerName} // Passing retailer name
+        retailerId={activeChat.retailerId} 
+        userId={userId}
+        onClose={() => setActiveChat(null)} // Close chat when done
+      />
+      )}
     </div>
-    
   );
 };
 

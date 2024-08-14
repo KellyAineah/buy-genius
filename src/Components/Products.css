@@ -157,3 +157,19 @@ body.dark .search-bar:focus {
   border-color: #e55b00;
   box-shadow: 0 0 5px rgba(229, 91, 0, 0.5);
 }
+.product-card .messages-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.product-card .messages-button:hover {
+  background-color: #153352;
+  transform: translateY(-2px);
+}

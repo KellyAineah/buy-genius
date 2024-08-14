@@ -32,17 +32,30 @@ export const signup = (data) => {
     .catch(handleError);
 };
 
-export const login = (data) => {
-  return fetch(`${BASE_URL}/login`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .catch(handleError);
+export const login = async (data) => {
+  try {
+    const response = await fetch(`${BASE_URL}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      credentials: 'include',
+    });
+
+    const responseData = await handleResponse(response);
+
+    // Check if the response contains a token
+    if (responseData.token) {
+      // Store the token in local storage
+      localStorage.setItem('authToken', responseData.token);
+    }
+
+    return responseData;
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
 };
 
 export const checkSession = () => {
@@ -222,7 +235,6 @@ export const deleteUser = (userId) => {
     .catch(handleError);
 };
 
-
 export const fetchCategories = () => {
   return fetch(`${BASE_URL}/categories`, {
     method: 'GET',
@@ -232,23 +244,22 @@ export const fetchCategories = () => {
     .catch(handleError);
 };
 
-export const fetchUserProfile = (userId) => {
-  return fetch(`${BASE_URL}/users/${userId}`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .then(data => {
-      if (!data || Object.keys(data).length === 0) {
-        throw new Error('Profile data is empty');
-      }
-      return data;
-    })
-    .catch(handleError);
-};
-
-
-
+export async function fetchUserProfile(userId) {
+  try {
+    const response = await fetch(`${BASE_URL}/users/${userId}`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch profile data:', error);
+    throw error; // Re-throw to handle in the component
+  }
+} 
 
 export const fetchAllCategories = () => {
   return fetch(`${BASE_URL}/categories`, {
@@ -260,7 +271,7 @@ export const fetchAllCategories = () => {
 };
 
 export const recordSearchHistory = (searchTerm) => {
-  return fetch('http://localhost:5000/search_history', {
+  return fetch(`${BASE_URL}/search_history`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -273,7 +284,7 @@ export const recordSearchHistory = (searchTerm) => {
 };
 
 export const fetchSearchHistory = () => {
-  return fetch('http://localhost:5000/search_history', {
+  return fetch(`${BASE_URL}/search_history`, {
     method: 'GET',
     credentials: 'include',
   })
@@ -281,15 +292,23 @@ export const fetchSearchHistory = () => {
     .catch(handleError);
 };
 
-export const fetchMessages = () => {
-  return fetch(`${BASE_URL}/messages`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .catch(handleError);
+export const fetchMessages = async () => {
+  try {
+    const token = localStorage.getItem('authToken'); // Get the token from local storage
+    const response = await fetch(`${BASE_URL}/messages`, {
+      headers: {
+        'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+      }
+    });
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Error ${response.status}: ${error}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch messages:', error);
+    throw error;
+  }
 };
-
-
-
 

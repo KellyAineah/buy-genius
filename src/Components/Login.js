@@ -12,7 +12,7 @@ const Login = () => {
   const { setIsAuthenticated, setUserRole, setUserId } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -23,27 +23,27 @@ const Login = () => {
       return;
     }
 
-    login({ email, password })
-      .then(data => {
-        setLoading(false);
-        if (data.id) {
-          setIsAuthenticated(true);
-          setUserId(data.id);
-          setUserRole(data.is_admin ? 'admin' : data.is_retailer ? 'retailer' : 'user');
-          navigate('/');
-        } else {
-          setError(data.error || 'Invalid email or password. Please try again.');
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error('Login error:', error.message);
-        if (error.message.includes('403')) {
-          setError('Your retailer account is not approved yet. Please wait for admin approval.');
-        } else {
-          setError(error.message || 'Failed to connect to the server. Please try again later.');
-        }
-      });
+    try {
+      const data = await login({ email, password });
+      setLoading(false);
+
+      if (data.id) {
+        setIsAuthenticated(true);
+        setUserId(data.id);
+        setUserRole(data.is_admin ? 'admin' : data.is_retailer ? 'retailer' : 'user');
+        navigate('/');
+      } else {
+        setError(data.error || 'Invalid email or password. Please try again.');
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error('Login error:', error.message);
+      if (error.message.includes('403')) {
+        setError('Your retailer account is not approved yet. Please wait for admin approval.');
+      } else {
+        setError(error.message || 'Failed to connect to the server. Please try again later.');
+      }
+    }
   };
 
   return (

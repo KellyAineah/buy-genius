@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { sendMessage } from './api'; 
+import { sendMessage, fetchMessages } from './api'; 
 import './ProductModal.css';
 
 const ProductModal = ({ product, onClose }) => {
   const { user } = useContext(AuthContext);
   const [messageContent, setMessageContent] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [showMessages, setShowMessages] = useState(false);
+  const [messages, setMessages] = 
+  useState([]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -24,7 +27,7 @@ const ProductModal = ({ product, onClose }) => {
 
     sendMessage(messageData)
       .then(response => {
-        console.log('Message sent:', response);
+        setMessages([...messages, response]);
         setMessageContent('');
         setErrorMessage('');
       })
@@ -32,6 +35,16 @@ const ProductModal = ({ product, onClose }) => {
         console.error('Failed to send message:', error);
         setErrorMessage('Failed to send message. Please try again.');
       });
+  };
+
+  const handleToggleMessages = () => {
+    if (!showMessages) {
+      // Fetch messages when the chatbox is opened
+      fetchMessages(product.retailer.user_id)
+        .then(data => setMessages(data))
+        .catch(error => console.error('Failed to fetch messages:', error));
+    }
+    setShowMessages(!showMessages);
   };
 
   return (
@@ -47,16 +60,33 @@ const ProductModal = ({ product, onClose }) => {
         <p>Retailer: {product.retailer_name}</p>
 
         {user && !user.is_retailer ? (
-          <form onSubmit={handleSendMessage} className="message-form">
-            <textarea
-              value={messageContent}
-              onChange={(e) => setMessageContent(e.target.value)}
-              placeholder="Write your message here"
-              required
-            />
-            <button type="submit">Send Message</button>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-          </form>
+          <>
+            <button onClick={handleToggleMessages} className="message-button">
+              {showMessages ? "Close Chat" : "Message"}
+            </button>
+
+            {showMessages && (
+              <div className="chatbox">
+                <div className="messages-list">
+                  {messages.map((message, index) => (
+                    <div key={index} className={`message ${message.sender_id === user.id ? 'sent' : 'received'}`}>
+                      <p>{message.content}</p>
+                    </div>
+                  ))}
+                </div>
+                <form onSubmit={handleSendMessage} className="message-form">
+                  <textarea
+                    value={messageContent}
+                    onChange={(e) => setMessageContent(e.target.value)}
+                    placeholder="Write your message here"
+                    required
+                  />
+                  <button type="submit">Send</button>
+                </form>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+              </div>
+            )}
+          </>
         ) : (
           <p></p>
         )}

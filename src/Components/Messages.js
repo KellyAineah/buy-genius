@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
+import socket from './socket';
 import { fetchMessages, sendMessage } from './api';
-//import './MessagingPage.css';
 
 const Messages = () => {
   const { retailerId } = useParams();
@@ -13,10 +13,24 @@ const Messages = () => {
   const productId = new URLSearchParams(search).get('product');
 
   useEffect(() => {
+    // Fetch previous messages between user and retailer
     fetchMessages(retailerId)
       .then(data => setMessages(data))
       .catch(error => console.error('Failed to fetch messages:', error));
-  }, [retailerId]);
+
+    // Handle real-time messages
+    const handleMessage = (message) => {
+      if (message.product_id === productId && message.sender_id === retailerId) {
+        setMessages(prevMessages => [...prevMessages, message]);
+      }
+    };
+
+    socket.on('message', handleMessage);
+
+    return () => {
+      socket.off('message', handleMessage);
+    };
+  }, [retailerId, productId]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -28,21 +42,27 @@ const Messages = () => {
 
     const messageData = {
       receiver_id: retailerId,
+      sender_id: user.id,
       product_id: productId,
       content: messageContent,
     };
 
     sendMessage(messageData)
       .then(response => {
-        setMessages([...messages, response]);
+        setMessages(prevMessages => [...prevMessages, response]);
         setMessageContent('');
+        socket.emit('message', response);
       })
       .catch(error => console.error('Failed to send message:', error));
   };
 
+  if (!user) {
+    return <div>Loading...</div>; // or any other loading indicator
+  }
+
   return (
     <div className="messaging-page-container">
-      <h2>Contact Retailer</h2>
+      <h2>{user.role === 'retailer' ? 'Customer Messages' : 'Contact Retailer'}</h2>
       <div className="messages-list">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender_id === user.id ? 'sent' : 'received'}`}>
