@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import './ChatCard.css'; // For modal styling
 
-// Connect to the Flask server's socket.io instance
-const socket = io('http://127.0.0.1:5000');
+const token = localStorage.getItem('authToken'); // Get token from localStorage
+
+const socket = io('http://127.0.0.1:5000', {
+  query: { token } // Pass token as a query parameter
+});
 
 function ChatCard({ retailerName, retailerId, userId, onClose }) {
   const [messages, setMessages] = useState([]);

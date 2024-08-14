@@ -1,5 +1,9 @@
 const BASE_URL = 'http://localhost:5000';
 
+
+const generateRandomToken = () => {
+  return Math.random().toString(36).substring(2, 15); // Generates a random alphanumeric string
+};
 // Function to handle responses
 const handleResponse = (response) => {
   if (response.ok) {
@@ -32,39 +36,28 @@ export const signup = (data) => {
     .catch(handleError);
 };
 
-export const login = async (data) => {
+export const login = async (credentials) => {
   try {
     const response = await fetch(`${BASE_URL}/login`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
     });
 
-    const responseData = await handleResponse(response);
-
-    // Check if the response contains a token
-    if (responseData.token) {
-      // Store the token in local storage
-      localStorage.setItem('authToken', responseData.token);
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Error ${response.status}: ${error}`);
     }
 
-    return responseData;
-  } catch (error) {
-    handleError(error);
-    throw error;
-  }
-};
+    // Generate and store the token
+    const token = generateRandomToken();
+    localStorage.setItem('authToken', token); // Store the token in localStorage
 
-export const checkSession = () => {
-  return fetch(`${BASE_URL}/check_session`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .catch(handleError);
+    console.log('Random token assigned:', token); // Log for debugging
+
+  } catch (error) {
+    console.error('Login failed:', error);
+  }
 };
 
 export const logout = () => {
@@ -83,7 +76,14 @@ export const logout = () => {
     })
     .catch(handleError);
 };
-
+export const checkSession = () => {
+  return fetch(`${BASE_URL}/check_session`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
 export const fetchMyProducts = () => {
   return fetch(`${BASE_URL}/retailer_dashboard`, {
     method: 'GET',
@@ -259,7 +259,7 @@ export async function fetchUserProfile(userId) {
     console.error('Failed to fetch profile data:', error);
     throw error; // Re-throw to handle in the component
   }
-} 
+}
 
 export const fetchAllCategories = () => {
   return fetch(`${BASE_URL}/categories`, {
@@ -291,24 +291,34 @@ export const fetchSearchHistory = () => {
     .then(handleResponse)
     .catch(handleError);
 };
-
 export const fetchMessages = async () => {
   try {
-    const token = localStorage.getItem('authToken'); // Get the token from local storage
+    const token = localStorage.getItem('authToken');
+    console.log('Token retrieved:', token); // Ensure token is correctly retrieved
+
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
     const response = await fetch(`${BASE_URL}/messages`, {
+      method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}` // Include the token in the Authorization header
-      }
+        'Authorization': `Bearer ${token}`, // Pass the token in the Authorization header
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
     });
+
     if (!response.ok) {
       const error = await response.text();
       throw new Error(`Error ${response.status}: ${error}`);
     }
+
     const data = await response.json();
     return data;
+
   } catch (error) {
     console.error('Failed to fetch messages:', error);
-    throw error;
+    throw error; // Re-throw to handle in the component
   }
 };
-
