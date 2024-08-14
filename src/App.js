@@ -9,6 +9,7 @@ import Profile from './Components/Profile';
 import AdminDashboard from './Components/AdminDashboard';
 import Messages from './Components/Messages';
 import MyProducts from './Components/MyProducts';
+import Wishlist from './Components/Wishlist';  
 import Navbar from './Components/Navbar';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -39,6 +40,9 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin_dashboard" element={<AdminDashboard />} />
               <Route path="/my_products" element={<MyProducts />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/search_history" element={<SearchHistory />} />
+              <Route path="/wishlist" element={<Wishlist />} />  
               <Route path="/users" element={<Users />} />
               <Route path="/search_history" element={<SearchHistory />} />
               <Route path="/messages" element={<Messages />} />

@@ -48,6 +48,7 @@ const Login = () => {
 
   return (
     <div className="login-form">
+      <h1>BuyGenius</h1>
       <h2>Login</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleLogin}>

@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    // Check if the user is already logged in by verifying the session
     checkSession()
       .then(data => {
         if (data.id) {
@@ -37,10 +36,9 @@ export const AuthProvider = ({ children }) => {
         setUserEmail(''); // Handle error case by clearing email
         setUserName(''); // Handle error case by clearing username
       })
-      .finally(() => setLoading(false)); 
+      .finally(() => setLoading(false));
   }, []);
 
-  // Provide the context value to be consumed by other components
   return (
     <AuthContext.Provider 
       value={{ 

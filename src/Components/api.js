@@ -36,6 +36,17 @@ export const signup = (data) => {
     .catch(handleError);
 };
 
+
+export const removeFromWishlist = (wishlistId) => {
+  return fetch(`${BASE_URL}/wishlist/${wishlistId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+
 export const login = async (credentials) => {
   try {
     const response = await fetch(`${BASE_URL}/login`, {
@@ -146,19 +157,6 @@ export const fetchAllProducts = () => {
     .catch(handleError);
 };
 
-export const addToWishlist = (productId) => {
-  return fetch(`${BASE_URL}/wishlist`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ product_id: productId }),
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .catch(handleError);
-};
-
 export const sendMessage = (data) => {
   return fetch(`${BASE_URL}/messages`, {
     method: 'POST',
@@ -244,6 +242,20 @@ export const fetchCategories = () => {
     .catch(handleError);
 };
 
+export const fetchUserProfile = (userId) => {
+  return fetch(`${BASE_URL}/users/${userId}`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .then(data => {
+      if (!data || Object.keys(data).length === 0) {
+        throw new Error('Profile data is empty');
+      }
+      return data;
+    })
+    .catch(handleError);
+};
 export async function fetchUserProfile(userId) {
   try {
     const response = await fetch(`${BASE_URL}/users/${userId}`, {
@@ -291,6 +303,38 @@ export const fetchSearchHistory = () => {
     .then(handleResponse)
     .catch(handleError);
 };
+
+export const fetchMessages = () => {
+  return fetch(`${BASE_URL}/messages`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const addToWishlist = (productId) => {
+  return fetch(`${BASE_URL}/wishlist`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ product_id: productId }),
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const fetchWishlist = () => {
+  return fetch(`${BASE_URL}/wishlist`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
 export const fetchMessages = async () => {
   try {
     const token = localStorage.getItem('authToken');

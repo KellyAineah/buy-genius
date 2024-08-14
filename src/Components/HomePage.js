@@ -11,6 +11,18 @@ const HomePage = ({ theme }) => {
         navigate('/products');
     };
 
+    const renderAnimatedText = (text) => {
+        return text.split("").map((letter, index) => (
+            <span 
+                key={index} 
+                className="animated-letter"
+                style={letter === " " ? { width: "1rem" } : {}}
+            >
+                {letter}
+            </span>
+        ));
+    };
+
     return (
         <div className={`homepage-container ${theme}`}>
             <div className="carousel-container">
@@ -32,7 +44,6 @@ const HomePage = ({ theme }) => {
                     <div className="carousel-slide">
                         <img src="https://images.pexels.com/photos/5632398/pexels-photo-5632398.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Shopping Experience" />
                     </div>
-                 
                     <div className="carousel-slide">
                         <img src="https://focus.independent.ie/thumbor/MlmwfUJJPTa4s-oMQddFvSyLfUQ=/0x42:2001x1377/960x640/prod-mh-ireland/ec9b6be5-a449-4ccf-afd9-5d7b01f0a07d/045a5b62-b9f0-4996-982c-fb119afd9e3c/confused%20consumer.jpg" alt="Shopping Experience" />
                     </div>
@@ -40,7 +51,9 @@ const HomePage = ({ theme }) => {
             </div>
             <div className="content-overlay">
                 <div className="landing-page-content">
-                    <h1 className="main-heading">Welcome to BuyGenius</h1>
+                    <h1 className="main-heading">
+                        {renderAnimatedText("Welcome to BuyGenius.")}
+                    </h1>
                     <p>Discover the best deals across all popular online stores.</p>
                     <p>Millions of products across multiple categories for all your shopping needs.</p>
                     <div className="explore-container">
