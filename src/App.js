@@ -8,6 +8,7 @@ import Signup from './Components/Signup';
 import Profile from './Components/Profile';
 import AdminDashboard from './Components/AdminDashboard';
 import MyProducts from './Components/MyProducts';
+import Wishlist from './Components/Wishlist';  
 import Navbar from './Components/Navbar';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
@@ -17,7 +18,6 @@ import useTheme from './Components/UseTheme';
 import SearchHistory from './Components/SearchHistory';
 import './Theme.css';
 import './App.css';
-
 
 const App = () => {
   const { theme, toggleTheme } = useTheme();
@@ -38,11 +38,9 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin_dashboard" element={<AdminDashboard />} />
               <Route path="/my_products" element={<MyProducts />} />
-              <Route path="/users" element={<Users />} /> 
-              <Route path="/search_history" element={<SearchHistory />} /> 
-              
-              
-              
+              <Route path="/users" element={<Users />} />
+              <Route path="/search_history" element={<SearchHistory />} />
+              <Route path="/wishlist" element={<Wishlist />} />  
             </Routes>
           </div>
           <Footer theme={theme} />

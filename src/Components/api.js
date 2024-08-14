@@ -32,6 +32,17 @@ export const signup = (data) => {
     .catch(handleError);
 };
 
+
+export const removeFromWishlist = (wishlistId) => {
+  return fetch(`${BASE_URL}/wishlist/${wishlistId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+
 export const login = (data) => {
   return fetch(`${BASE_URL}/login`, {
     method: 'POST',
@@ -133,19 +144,6 @@ export const fetchAllProducts = () => {
     .catch(handleError);
 };
 
-export const addToWishlist = (productId) => {
-  return fetch(`${BASE_URL}/wishlist`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ product_id: productId }),
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .catch(handleError);
-};
-
 export const sendMessage = (data) => {
   return fetch(`${BASE_URL}/messages`, {
     method: 'POST',
@@ -222,7 +220,6 @@ export const deleteUser = (userId) => {
     .catch(handleError);
 };
 
-
 export const fetchCategories = () => {
   return fetch(`${BASE_URL}/categories`, {
     method: 'GET',
@@ -246,9 +243,6 @@ export const fetchUserProfile = (userId) => {
     })
     .catch(handleError);
 };
-
-
-
 
 export const fetchAllCategories = () => {
   return fetch(`${BASE_URL}/categories`, {
@@ -290,6 +284,24 @@ export const fetchMessages = () => {
     .catch(handleError);
 };
 
+export const addToWishlist = (productId) => {
+  return fetch(`${BASE_URL}/wishlist`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ product_id: productId }),
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};
 
-
-
+export const fetchWishlist = () => {
+  return fetch(`${BASE_URL}/wishlist`, {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then(handleResponse)
+    .catch(handleError);
+};

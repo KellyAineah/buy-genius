@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
 import { AuthContext } from './AuthContext';
 import { logout } from './api';
@@ -44,22 +44,22 @@ const Navbar = ({ theme, toggleTheme }) => {
     if (!isAuthenticated) {
       return (
         <>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/products">Explore Products</Link></li>
+          <li><NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink></li>
+          <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
           <li className="wishlist" ref={wishlistRef}>
             <div className="wishlist-icon" onClick={toggleWishlistDropdown}>
               My Wishlist
               <div className={`dropdown-menu ${wishlistOpen ? 'open' : ''}`}>
                 <div className="wishlist-message">
-                  <p>Save your favorite items! <br/> Track the price of your favorite items!</p>
+                  <p>Save your favorite items! <br /> Track the price of your favorite items!</p>
                   <button className="btn btn-primary" onClick={() => navigate('/login')}>Login</button>
                 </div>
               </div>
             </div>
           </li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/signup">Sign Up</Link></li>
+          <li><NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink></li>
+          <li><NavLink to="/login" className={({ isActive }) => (isActive ? 'active' : '')}>Login</NavLink></li>
+          <li><NavLink to="/signup" className={({ isActive }) => (isActive ? 'active' : '')}>Sign Up</NavLink></li>
         </>
       );
     }
@@ -67,45 +67,36 @@ const Navbar = ({ theme, toggleTheme }) => {
     if (userRole === 'admin') {
       return (
         <>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/products">Explore Products</Link></li>
-          <li><Link to="/admin_dashboard">Retailers</Link></li>
-          <li><Link to="/users">Users</Link></li>
-          <li><Link to="/feedback">Feedback</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
+          <li><NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink></li>
+          <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
+          <li><NavLink to="/admin_dashboard" className={({ isActive }) => (isActive ? 'active' : '')}>Retailers</NavLink></li>
+          <li><NavLink to="/users" className={({ isActive }) => (isActive ? 'active' : '')}>Users</NavLink></li>
+          <li><NavLink to="/feedback" className={({ isActive }) => (isActive ? 'active' : '')}>Feedback</NavLink></li>
+          <li><NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>Profile</NavLink></li>
           <li><button className="btn btn-logout" onClick={handleLogout}>Logout</button></li>
         </>
       );
     } else if (userRole === 'retailer') {
       return (
         <>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/products">Explore Products</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/my_products">My Products</Link></li>
-          <li><Link to="/profile">Retailer Profile</Link></li>
-          <li><Link to="/messages">Messages</Link></li>
+          <li><NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink></li>
+          <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
+          <li><NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink></li>
+          <li><NavLink to="/my_products" className={({ isActive }) => (isActive ? 'active' : '')}>My Products</NavLink></li>
+          <li><NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>Retailer Profile</NavLink></li>
+          <li><NavLink to="/messages" className={({ isActive }) => (isActive ? 'active' : '')}>Messages</NavLink></li>
           <li><button className="btn btn-logout" onClick={handleLogout}>Logout</button></li>
         </>
       );
     } else {
       return (
         <>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/products">Explore Products</Link></li>
-          <li className="wishlist" ref={wishlistRef}>
-            <div className="wishlist-icon" onClick={toggleWishlistDropdown}>
-              My Wishlist
-              <div className={`dropdown-menu ${wishlistOpen ? 'open' : ''}`}>
-                <div className="wishlist-items">
-                  <p>Your wishlist is empty. Start adding your favorite products!</p>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/search_history">User History</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
+          <li><NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink></li>
+          <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
+          <li><NavLink to="/wishlist" className={({ isActive }) => (isActive ? 'active' : '')}>My Wishlist</NavLink></li>
+          <li><NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink></li>
+          <li><NavLink to="/search_history" className={({ isActive }) => (isActive ? 'active' : '')}>User History</NavLink></li>
+          <li><NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>Profile</NavLink></li>
           <li><button className="btn btn-logout" onClick={handleLogout}>Logout</button></li>
         </>
       );
@@ -115,7 +106,7 @@ const Navbar = ({ theme, toggleTheme }) => {
   return (
     <nav className={`navbar ${theme}`}>
       <div className="logo">
-        <Link to="/">BuyGenius</Link>
+        <NavLink to="/">BuyGenius</NavLink>
       </div>
       <ul className="nav-links">
         {renderNavLinks()}

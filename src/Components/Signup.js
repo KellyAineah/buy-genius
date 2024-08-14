@@ -53,6 +53,7 @@ const Signup = () => {
 
   return (
     <div className="signup-form">
+      <h1>BuyGenius</h1>
       <h2>Sign Up</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSignup}>

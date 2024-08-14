@@ -1,3 +1,4 @@
+
 .homepage-container {
     position: relative;
     text-align: center;
@@ -75,4 +76,41 @@
 
 .explore-button:hover {
     background-color: #0056b3;
+}
+
+
+.homepage-container.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.homepage-container.dark .content-overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.homepage-container.dark .main-heading {
+    color: #f1f1f1;
+}
+
+.homepage-container.dark .landing-page-content p {
+    color: #cfcfcf;
+}
+
+.homepage-container.dark .explore-button {
+    background-color: #444;
+    color: #fff;
+}
+
+.homepage-container.dark .explore-button:hover {
+    background-color: #666;
+}
+/* Existing styles */
+
+.animated-letter {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.animated-letter:hover {
+    transform: translateY(-10px);
 }
