@@ -304,15 +304,6 @@ export const fetchSearchHistory = () => {
     .catch(handleError);
 };
 
-export const fetchMessages = () => {
-  return fetch(`${BASE_URL}/messages`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .catch(handleError);
-};
-
 export const addToWishlist = (productId) => {
   return fetch(`${BASE_URL}/wishlist`, {
     method: 'POST',
