@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { fetchAllProducts, fetchAllCategories, recordSearchHistory, addToWishlist, fetchWishlist } from './api.js'; 
 import { AuthContext } from './AuthContext';
-import React, { useState, useEffect, useContext } from 'react';
-import { fetchAllProducts, fetchAllCategories, recordSearchHistory } from './api';  // Removed sendMessage import
 import './Products.css';
 import ProductModal from './ProductModal';
 import { FaSearch } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChatCard from './ChatCard';
-import { AuthContext } from './AuthContext';
 
 const Products = ({ theme }) => {
   const { isAuthenticated } = useContext(AuthContext);

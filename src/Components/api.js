@@ -46,19 +46,16 @@ export const removeFromWishlist = (wishlistId) => {
     .catch(handleError);
 };
 
-
 export const login = async (credentials) => {
   try {
     const response = await fetch(`${BASE_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),
+      credentials: 'include', // Ensure credentials are included in the request
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Error ${response.status}: ${error}`);
-    }
+    const data = await handleResponse(response); // Use handleResponse to process the response
 
     // Generate and store the token
     const token = generateRandomToken();
@@ -66,10 +63,13 @@ export const login = async (credentials) => {
 
     console.log('Random token assigned:', token); // Log for debugging
 
+    return data; // Return data if needed
+
   } catch (error) {
-    console.error('Login failed:', error);
+    handleError(error); // Use handleError to handle the error
   }
 };
+
 
 export const logout = () => {
   return fetch(`${BASE_URL}/logout`, {
@@ -242,20 +242,7 @@ export const fetchCategories = () => {
     .catch(handleError);
 };
 
-export const fetchUserProfile = (userId) => {
-  return fetch(`${BASE_URL}/users/${userId}`, {
-    method: 'GET',
-    credentials: 'include',
-  })
-    .then(handleResponse)
-    .then(data => {
-      if (!data || Object.keys(data).length === 0) {
-        throw new Error('Profile data is empty');
-      }
-      return data;
-    })
-    .catch(handleError);
-};
+ 
 export async function fetchUserProfile(userId) {
   try {
     const response = await fetch(`${BASE_URL}/users/${userId}`, {
