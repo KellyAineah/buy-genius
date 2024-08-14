@@ -1,4 +1,4 @@
-/* Default light mode styles */
+
 .unique-users-container {
     padding: 20px;
     background-color: #ffffff;
@@ -8,6 +8,7 @@
   .unique-users-heading {
     font-size: 24px;
     margin-bottom: 20px;
+    margin-top: 50px;
   }
   
   .unique-users-search-input,
@@ -80,7 +81,7 @@
     margin-top: 20px;
   }
   
-  /* Dark mode styles */
+  
   .unique-users-container.dark-theme {
     background-color: #333;
     color: #f4f4f4;
