@@ -18,6 +18,8 @@
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
+    "stream-chat": "^8.37.0",
+    "stream-chat-react": "^11.23.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -185,7 +185,7 @@ const Products = ({ theme }) => {
                 className="wishlist-button" 
                 onClick={() => handleAddToWishlist(product.id)}
               >
-                ❤️
+                &#x2665;&#xfe0f;
                 <span className="wishlist-tooltip">Add to my wishlist</span>
               </button>
               {product.recommended && <button className="recommended-btn">Recommended</button>}

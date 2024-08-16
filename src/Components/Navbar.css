@@ -4,12 +4,13 @@
   align-items: center;
   background-color: #012144;
   padding: 10px 20px;
-  height: 55px;
+  height: 65px;
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 1000;
+  
 }
 
 
@@ -85,7 +86,7 @@ body {
 }
 
 .wishlist-icon:hover {
-  color: yellow;
+  color: #6A49FA;
 }
 .wishlist-icon::before {
   content: "♡";

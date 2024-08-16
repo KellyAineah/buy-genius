@@ -19,7 +19,7 @@ const Users = ({ theme }) => {
   }, [role, search]);
 
   const handleDelete = (userId) => {
-    if (selectedUser.is_admin) {
+    if (selectedUser && selectedUser.is_admin) {
       alert("Cannot delete an admin user.");
       return;
     }
