@@ -90,3 +90,49 @@
 .my-products li button + button:hover {
     background-color: #c82333;
 }
+
+
+
+
+/* Media query for devices with a max width of 768px (tablets and phones) */
+@media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  }
+  
+  /* Media query for devices with a max width of 480px (phones) */
+  @media (max-width: 480px) {
+    .container {
+      padding: 5px;
+      font-size: 14px;
+    }
+  }
+  
+  /* For iPhone SE/5/5S */
+  @media (max-width: 320px) {
+      .container {
+        padding: 5px;
+        font-size: 12px;
+        /* Add other styles specific to this width */
+      }
+    }
+    
+    /* For iPhone 6/7/8/X/11/12/13 Mini */
+    @media (max-width: 375px) {
+      .container {
+        padding: 10px;
+        font-size: 14px;
+        /* Add other styles specific to this width */
+      }
+    }
+    
+    /* For iPhone 6+/7+/8+/X/11/12/13 Pro */
+    @media (max-width: 414px) {
+      .container {
+        padding: 15px;
+        font-size: 16px;
+        /* Add other styles specific to this width */
+      }
+    }
+    

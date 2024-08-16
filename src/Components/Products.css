@@ -25,7 +25,7 @@
 
 .search-bar {
   width: 100%; 
-  padding: 10px 35px 10px 10px; /* Adjust padding to accommodate the icon on the right */
+  padding: 10px 35px 10px 10px; 
   border-radius: 5px; 
   border: 1px solid #ddd; 
   font-size: 1rem;
@@ -34,7 +34,7 @@
 
 .search-icon {
   position: absolute;
-  right: 10px; /* Move the icon to the right */
+  right: 10px; 
   top: 50%;
   transform: translateY(-50%);
   color: #ddd;
@@ -224,3 +224,48 @@ body.dark .wishlist-tooltip {
   background-color: rgba(255, 255, 255, 0.75);
   color: #000;
 }
+
+
+
+/* Media query for devices with a max width of 768px (tablets and phones) */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+}
+
+/* Media query for devices with a max width of 480px (phones) */
+@media (max-width: 480px) {
+  .container {
+    padding: 5px;
+    font-size: 14px;
+  }
+}
+
+/* For iPhone SE/5/5S */
+@media (max-width: 320px) {
+    .container {
+      padding: 5px;
+      font-size: 12px;
+      /* Add other styles specific to this width */
+    }
+  }
+  
+  /* For iPhone 6/7/8/X/11/12/13 Mini */
+  @media (max-width: 375px) {
+    .container {
+      padding: 10px;
+      font-size: 14px;
+      /* Add other styles specific to this width */
+    }
+  }
+  
+  /* For iPhone 6+/7+/8+/X/11/12/13 Pro */
+  @media (max-width: 414px) {
+    .container {
+      padding: 15px;
+      font-size: 16px;
+      /* Add other styles specific to this width */
+    }
+  }
+  
