@@ -48,7 +48,7 @@ const Navbar = ({ theme, toggleTheme }) => {
           <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
           <li className="wishlist" ref={wishlistRef}>
             <div className="wishlist-icon" onClick={toggleWishlistDropdown}>
-              My Wishlist
+            My Wishlist
               <div className={`dropdown-menu ${wishlistOpen ? 'open' : ''}`}>
                 <div className="wishlist-message">
                   <p>Save your favorite items! <br /> Track the price of your favorite items!</p>
@@ -71,7 +71,6 @@ const Navbar = ({ theme, toggleTheme }) => {
           <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
           <li><NavLink to="/admin_dashboard" className={({ isActive }) => (isActive ? 'active' : '')}>Retailers</NavLink></li>
           <li><NavLink to="/users" className={({ isActive }) => (isActive ? 'active' : '')}>Users</NavLink></li>
-          <li><NavLink to="/feedback" className={({ isActive }) => (isActive ? 'active' : '')}>Feedback</NavLink></li>
           <li><NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>Profile</NavLink></li>
           <li><button className="btn btn-logout" onClick={handleLogout}>Logout</button></li>
         </>
@@ -84,7 +83,7 @@ const Navbar = ({ theme, toggleTheme }) => {
           <li><NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink></li>
           <li><NavLink to="/my_products" className={({ isActive }) => (isActive ? 'active' : '')}>My Products</NavLink></li>
           <li><NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>Retailer Profile</NavLink></li>
-          <li><NavLink to="/messages" className={({ isActive }) => (isActive ? 'active' : '')}>Messages</NavLink></li>
+          
           <li><button className="btn btn-logout" onClick={handleLogout}>Logout</button></li>
         </>
       );
@@ -93,7 +92,7 @@ const Navbar = ({ theme, toggleTheme }) => {
         <>
           <li><NavLink to="/" end className={({ isActive }) => (isActive ? 'active' : '')}>Home</NavLink></li>
           <li><NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : '')}>Explore Products</NavLink></li>
-          <li><NavLink to="/wishlist" className={({ isActive }) => (isActive ? 'active' : '')}>My Wishlist</NavLink></li>
+          <li><NavLink to="/wishlist" className={({ isActive }) => (isActive ? 'active' : '')}>	&#9825; My Wishlist</NavLink></li>
           <li><NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>About</NavLink></li>
           <li><NavLink to="/search_history" className={({ isActive }) => (isActive ? 'active' : '')}>User History</NavLink></li>
           <li><NavLink to="/profile" className={({ isActive }) => (isActive ? 'active' : '')}>Profile</NavLink></li>

@@ -74,6 +74,7 @@ const Login = () => {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
+    
     </div>
   );
 };

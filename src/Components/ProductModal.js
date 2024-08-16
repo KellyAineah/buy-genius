@@ -1,38 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from './AuthContext';
-import { sendMessage } from './api'; 
+import React from 'react';
 import './ProductModal.css';
 
 const ProductModal = ({ product, onClose }) => {
-  const { user } = useContext(AuthContext);
-  const [messageContent, setMessageContent] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const retailerName = product?.retailer_name || 'the retailer';
+  const whatsappNumber = product?.retailer_whatsapp;
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-
-    if (!user) {
-      setErrorMessage('You need to log in to send a message.');
-      return;
-    }
-
-    const messageData = {
-      receiver_id: product.retailer.user_id, 
-      product_id: product.id,
-      content: messageContent,
-    };
-
-    sendMessage(messageData)
-      .then(response => {
-        console.log('Message sent:', response);
-        setMessageContent('');
-        setErrorMessage('');
-      })
-      .catch(error => {
-        console.error('Failed to send message:', error);
-        setErrorMessage('Failed to send message. Please try again.');
-      });
-  };
+  const whatsappLink = whatsappNumber 
+    ? `https://wa.me/${whatsappNumber}?text=Hello%20${retailerName}%2C%20I'm%20interested%20in%20your%20product%3A%20${product.name}%20priced%20at%20${product.price}.`
+    : null;
 
   return (
     <div className="modal-overlay">
@@ -44,21 +19,19 @@ const ProductModal = ({ product, onClose }) => {
         <p>Price: {product.price}</p>
         <p>Delivery Cost: {product.delivery_cost}</p>
         <p>Payment Mode: {product.payment_mode}</p>
-        <p>Retailer: {product.retailer_name}</p>
+        <p>Retailer: {retailerName}</p>
 
-        {user && !user.is_retailer ? (
-          <form onSubmit={handleSendMessage} className="message-form">
-            <textarea
-              value={messageContent}
-              onChange={(e) => setMessageContent(e.target.value)}
-              placeholder="Write your message here"
-              required
-            />
-            <button type="submit">Send Message</button>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-          </form>
+        {whatsappLink ? (
+          <a
+            href={whatsappLink}
+            className="whatsapp-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Contact Retailer on WhatsApp
+          </a>
         ) : (
-          <p></p>
+          <p>The retailer has not provided a WhatsApp number.</p>
         )}
       </div>
     </div>
