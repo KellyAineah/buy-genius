@@ -1,18 +1,27 @@
+/* Base Styles */
+.homepage-wrapper {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+}
 
-.homepage-container {
+/* Hero Section */
+.homepage-hero {
     position: relative;
     text-align: center;
     color: #fff;
-    height: calc(100vh - 65px);
+    height: 100vh;
+    min-height: 600px;
+    max-height: 1200px;
     overflow: hidden;
-    margin: 0; 
-    padding: 0; 
+    margin: 0;
+    padding: 0;
 }
 
 .carousel-container {
     width: 100%;
     height: 100%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .carousel .carousel-slide img {
@@ -33,78 +42,118 @@
     align-items: center;
     padding: 20px;
     background: rgba(138, 122, 122, 0.7);
-    box-sizing: border-box; 
-    overflow: hidden; 
-    max-width: 100%; 
-    height: auto; 
+    box-sizing: border-box;
 }
 
 .landing-page-content {
     text-align: center;
-    max-width: 90%; 
-    margin: 0; 
-    padding: 0; 
+    max-width: 800px;
+    padding: 20px;
 }
 
 .main-heading {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     margin-bottom: 20px;
     font-weight: bold;
+    line-height: 1.2;
 }
 
 .landing-page-content p {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
     margin-bottom: 20px;
+    line-height: 1.6;
 }
 
 .explore-container {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .explore-button {
-    padding: 10px 20px;
+    padding: 15px 35px;
     font-size: 1.2rem;
     color: #fff;
     background-color: #012144;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.explore-button:hover {
-    background-color: #0056b3;
+/* Cards Section */
+.feature-cards-section {
+    padding: 100px 20px;
+    text-align: center;
+    background-color: #f8f9fa;
 }
 
-
-.homepage-container.dark {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-.homepage-container.dark .content-overlay {
-    background: rgba(0, 0, 0, 0.7);
-}
-
-.homepage-container.dark .main-heading {
+.feature-cards-section.dark {
+    background-color: #1a1a1a;
     color: #f1f1f1;
 }
 
-.homepage-container.dark .landing-page-content p {
-    color: #cfcfcf;
+.feature-cards-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 60px;
+    color: #012144;
+    font-weight: 700;
 }
 
-.homepage-container.dark .explore-button {
-    background-color: #444;
+.feature-cards-section.dark .feature-cards-title {
+    color: #f1f1f1;
+}
+
+.feature-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feature-card {
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: #333;
+    text-align: center;
+    will-change: transform;
+}
+
+.feature-card h3 {
+    margin: 20px 0 15px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.feature-cards-section.dark .feature-card {
     color: #fff;
 }
 
-.homepage-container.dark .explore-button:hover {
-    background-color: #666;
+.feature-cards-section.dark .feature-card p {
+    color: #ddd;
 }
 
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* Animated Text */
 .animated-letter {
     display: inline-block;
     transition: transform 0.3s ease;
@@ -114,47 +163,78 @@
     transform: translateY(-10px);
 }
 
+/* Dark Mode Styles */
+.homepage-hero.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
 
+.homepage-hero.dark .content-overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
 
-/* Media query for devices with a max width of 768px (tablets and phones) */
+.homepage-hero.dark .main-heading {
+    color: #f1f1f1;
+}
+
+.homepage-hero.dark .landing-page-content p {
+    color: #cfcfcf;
+}
+
+.homepage-hero.dark .explore-button {
+    background-color: #444;
+    color: #fff;
+}
+
+.homepage-hero.dark .explore-button:hover {
+    background-color: #666;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .homepage-hero {
+        min-height: 500px;
+    }
+}
+
 @media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
+    .feature-cards-section {
+        padding: 70px 20px;
+    }
+    
+    .feature-cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .feature-card {
+        padding: 25px 15px;
+    }
 }
 
-/* Media query for devices with a max width of 480px (phones) */
 @media (max-width: 480px) {
-  .container {
-    padding: 5px;
-    font-size: 14px;
-  }
+    .homepage-hero {
+        min-height: 400px;
+    }
+    
+    .main-heading {
+        font-size: 2.2rem;
+    }
+    
+    .feature-cards-section {
+        padding: 50px 20px;
+    }
+    
+    .feature-cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+    }
+    
+    .feature-card {
+        padding: 20px 15px;
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+    }
 }
-
-/* For iPhone SE/5/5S */
-@media (max-width: 320px) {
-    .container {
-      padding: 5px;
-      font-size: 12px;
-      /* Add other styles specific to this width */
-    }
-  }
-  
-  /* For iPhone 6/7/8/X/11/12/13 Mini */
-  @media (max-width: 375px) {
-    .container {
-      padding: 10px;
-      font-size: 14px;
-      /* Add other styles specific to this width */
-    }
-  }
-  
-  /* For iPhone 6+/7+/8+/X/11/12/13 Pro */
-  @media (max-width: 414px) {
-    .container {
-      padding: 15px;
-      font-size: 16px;
-      /* Add other styles specific to this width */
-    }
-  }
-  
