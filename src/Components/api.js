@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:5000';
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 
 // Function to handle responses
 const handleResponse = (response) => {
@@ -254,7 +255,7 @@ export const fetchAllCategories = () => {
 };
 
 export const recordSearchHistory = (searchTerm) => {
-  return fetch('http://localhost:5000/search_history', {
+  return fetch(`${BASE_URL}/search_history`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -267,7 +268,7 @@ export const recordSearchHistory = (searchTerm) => {
 };
 
 export const fetchSearchHistory = () => {
-  return fetch('http://localhost:5000/search_history', {
+  return fetch(`${BASE_URL}/search_history`, {
     method: 'GET',
     credentials: 'include',
   })
