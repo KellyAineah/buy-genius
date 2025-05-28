@@ -13,25 +13,29 @@ const HomePage = ({ theme }) => {
             title: "Best Deals",
             description: "Find the hottest deals across all major retailers",
             icon: "💰",
-            bgColor: "#FF6B6B"
+            bgColor: theme === "dark" ? "#2a2a3a" : "#FF6B6B",
+            textColor: theme === "dark" ? "#ffffff" : "#000000"
         },
         {
             title: "Price Comparison",
             description: "Compare prices across different stores instantly",
             icon: "⚖️",
-            bgColor: "#4ECDC4"
+            bgColor: theme === "dark" ? "#1e3a5f" : "#4ECDC4",
+            textColor: theme === "dark" ? "#ffffff" : "#000000"
         },
         {
             title: "Trending Products",
             description: "Discover what's popular right now",
             icon: "🔥",
-            bgColor: "#FFD166"
+            bgColor: theme === "dark" ? "#5c2c0d" : "#FFD166",
+            textColor: theme === "dark" ? "#ffffff" : "#000000"
         },
         {
             title: "Smart Recommendations",
             description: "Get personalized product suggestions",
             icon: "🤖",
-            bgColor: "#A5D8FF"
+            bgColor: theme === "dark" ? "#0d4d6b" : "#A5D8FF",
+            textColor: theme === "dark" ? "#ffffff" : "#000000"
         }
     ];
 
@@ -97,7 +101,7 @@ const HomePage = ({ theme }) => {
     };
 
     return (
-        <div className="homepage-wrapper">
+        <div className={`homepage-wrapper ${theme}`}>
             {/* Hero Section */}
             <div className={`homepage-hero ${theme}`}>
                 <div className="carousel-container">
@@ -126,7 +130,7 @@ const HomePage = ({ theme }) => {
                 </div>
                 
                 <motion.div 
-                    className="content-overlay"
+                    className={`content-overlay ${theme}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
@@ -137,13 +141,13 @@ const HomePage = ({ theme }) => {
                         initial="hidden"
                         animate="visible"
                     >
-                        <motion.h1 className="main-heading" variants={itemVariants}>
+                        <motion.h1 className={`main-heading ${theme}`} variants={itemVariants}>
                             {renderAnimatedText("Welcome to BuyGenius.")}
                         </motion.h1>
-                        <motion.p variants={itemVariants}>
+                        <motion.p className={theme} variants={itemVariants}>
                             Discover the best deals across all popular online stores.
                         </motion.p>
-                        <motion.p variants={itemVariants}>
+                        <motion.p className={theme} variants={itemVariants}>
                             Millions of products across multiple categories for all your shopping needs.
                         </motion.p>
                         <motion.div 
@@ -151,7 +155,7 @@ const HomePage = ({ theme }) => {
                             variants={itemVariants}
                         >
                             <motion.button 
-                                className="explore-button" 
+                                className={`explore-button ${theme}`} 
                                 onClick={handleExploreClick}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -171,7 +175,7 @@ const HomePage = ({ theme }) => {
                 viewport={{ once: true, margin: "-100px" }}
             >
                 <motion.h2 
-                    className="feature-cards-title"
+                    className={`feature-cards-title ${theme}`}
                     variants={cardVariants}
                 >
                     Why Choose BuyGenius?
@@ -180,8 +184,11 @@ const HomePage = ({ theme }) => {
                     {featureCards.map((card, index) => (
                         <motion.div 
                             key={index}
-                            className="feature-card"
-                            style={{ backgroundColor: card.bgColor }}
+                            className={`feature-card ${theme}`}
+                            style={{ 
+                                backgroundColor: card.bgColor,
+                                color: card.textColor
+                            }}
                             onClick={() => navigate('/products')}
                             variants={cardVariants}
                             whileHover={{ scale: 1.05 }}
