@@ -5,11 +5,6 @@
     overflow-x: hidden;
 }
 
-.homepage-wrapper.dark {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
 /* Hero Section */
 .homepage-hero {
     position: relative;
@@ -21,10 +16,6 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
-}
-
-.homepage-hero.dark {
-    background-color: #121212;
 }
 
 .carousel-container {
@@ -54,10 +45,6 @@
     box-sizing: border-box;
 }
 
-.content-overlay.dark {
-    background: rgba(0, 0, 0, 0.7);
-}
-
 .landing-page-content {
     text-align: center;
     max-width: 800px;
@@ -69,22 +56,12 @@
     margin-bottom: 20px;
     font-weight: bold;
     line-height: 1.2;
-    color: #fff;
-}
-
-.main-heading.dark {
-    color: #f1f1f1;
 }
 
 .landing-page-content p {
     font-size: clamp(1rem, 1.5vw, 1.2rem);
     margin-bottom: 20px;
     line-height: 1.6;
-    color: #fff;
-}
-
-.landing-page-content p.dark {
-    color: #cfcfcf;
 }
 
 .explore-container {
@@ -107,19 +84,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.explore-button.dark {
-    background-color: #444;
-    color: #fff;
-}
-
-.explore-button.dark:hover {
-    background-color: #666;
-}
-
-.explore-button:hover {
-    background-color: #013a7a;
-}
-
 /* Cards Section */
 .feature-cards-section {
     padding: 100px 20px;
@@ -139,7 +103,7 @@
     font-weight: 700;
 }
 
-.feature-cards-title.dark {
+.feature-cards-section.dark .feature-cards-title {
     color: #f1f1f1;
 }
 
@@ -158,12 +122,9 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     cursor: pointer;
+    color: #333;
     text-align: center;
     will-change: transform;
-}
-
-.feature-card.dark {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .feature-card h3 {
@@ -174,8 +135,17 @@
 
 .feature-card p {
     font-size: 1rem;
+    color: #555;
     margin: 0;
     line-height: 1.6;
+}
+
+.feature-cards-section.dark .feature-card {
+    color: #fff;
+}
+
+.feature-cards-section.dark .feature-card p {
+    color: #ddd;
 }
 
 .card-icon {
@@ -191,6 +161,33 @@
 
 .animated-letter:hover {
     transform: translateY(-10px);
+}
+
+/* Dark Mode Styles */
+.homepage-hero.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.homepage-hero.dark .content-overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.homepage-hero.dark .main-heading {
+    color: #f1f1f1;
+}
+
+.homepage-hero.dark .landing-page-content p {
+    color: #cfcfcf;
+}
+
+.homepage-hero.dark .explore-button {
+    background-color: #444;
+    color: #fff;
+}
+
+.homepage-hero.dark .explore-button:hover {
+    background-color: #666;
 }
 
 /* Responsive Styles */
