@@ -1,4 +1,3 @@
-/* Navbar.css */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -11,31 +10,31 @@
   top: 0;
   left: 0;
   z-index: 1000;
+  
 }
 
-.navbar.dark {
-  background-color: #1a1a2e;
-}
 
 body {
   margin: 0;
-  padding-top: 65px;
+  padding-top: 65px; 
 }
 
 .logo a {
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-decoration: none;
+  position: relative;
   font-family: "Playfair Display", serif;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-  position: relative;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-left: 70px;
 }
 
 .logo a::after {
   content: "";
+  display: block;
   width: 100%;
-  height: 4px;
+  height: 6px;
   background-color: #f87620;
   position: absolute;
   bottom: -5px;
@@ -48,23 +47,23 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  margin-right: 50px ;
 }
 
 .nav-links li {
-  margin: 0 10px;
+  margin: 0 15px;
 }
 
-.nav-links a,
-.wishlist-icon {
+.nav-links a {
   color: #fff;
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s;
-  padding: 5px 0;
+  font-size: 1rem;
+  transition: color 0.3s, border-bottom 0.3s;
 }
 
-.nav-links a:hover,
-.wishlist-icon:hover {
+.nav-links a:hover {
   color: #6A49FA;
 }
 
@@ -73,52 +72,65 @@ body {
   color: #f87620;
 }
 
+.wishlist {
+  position: relative;
+}
+
+.wishlist-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.wishlist-icon:hover {
+  color: #6A49FA;
+}
 .wishlist-icon::before {
   content: "♡";
-  margin-right: 5px;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-right: 3px;
 }
 
 .dropdown-menu {
   position: absolute;
   top: 100%;
   right: 0;
-  background: #fff;
+  background-color: #fff;
   color: #333;
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 250px;
   padding: 10px;
   display: none;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .dropdown-menu.open {
   display: block;
 }
 
-.navbar.dark .dropdown-menu {
-  background: #2a2a3a;
-  color: #fff;
-  border-color: #444;
-}
-
 .wishlist-message {
   text-align: center;
 }
 
-.btn, .btn-logout {
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
+.wishlist-message p {
+  margin: 10px 0;
   font-size: 0.9rem;
-  transition: background-color 0.3s;
 }
 
 .btn {
   background-color: #ff6600;
-  color: white;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
@@ -127,109 +139,111 @@ body {
 
 .btn-logout {
   background-color: #dc3545;
-  color: white;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn-logout:hover {
   background-color: #c82333;
 }
 
-/* Hamburger menu styles */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 25px;
-  height: 20px;
+.wishlist-icon {
+  position: relative;
   cursor: pointer;
+  padding: 5px;
 }
 
-.menu-toggle span {
-  height: 3px;
-  background: #fff;
-  border-radius: 2px;
-  transition: all 0.3s;
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.menu-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+.dropdown-menu.open {
+  display: block;
 }
 
-.menu-toggle.active span:nth-child(2) {
-  opacity: 0;
+.wishlist-items {
+  max-height: 300px;
+  overflow-y: auto;
 }
 
-.menu-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
+.wishlist-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
 }
 
-/* Mobile styles */
+.wishlist-item:last-child {
+  border-bottom: none;
+}
+
+.wishlist-item p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.wishlist-message {
+  padding: 10px;
+  text-align: center;
+}
+
+.wishlist-message p {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+
+
+/* Media query for devices with a max width of 768px (tablets and phones) */
 @media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-  }
-
-  .nav-links {
-    position: fixed;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #012144;
-    top: 65px;
-    left: -100%;
-    width: 80%;
-    height: calc(100vh - 65px);
-    padding: 20px;
-    transition: left 0.3s;
-  }
-
-  .navbar.dark .nav-links {
-    background-color: #1a1a2e;
-  }
-
-  .nav-links.active {
-    left: 0;
-  }
-
-  .nav-links li {
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .nav-links a,
-  .wishlist-icon {
-    width: 100%;
-    font-size: 1.1rem;
-  }
-
-  .dropdown-menu {
-    width: 100%;
-    left: 0;
-    right: auto;
-    position: relative;
-  }
-
-  .btn, .btn-logout {
-    width: 100%;
-    text-align: center;
-    font-size: 1rem;
+  .container {
     padding: 10px;
   }
 }
 
+/* Media query for devices with a max width of 480px (phones) */
 @media (max-width: 480px) {
-  .navbar {
-    padding: 10px 15px;
-  }
-
-  .logo a {
-    font-size: 1.2rem;
-  }
-
-  .nav-links {
-    width: 100%;
-  }
-
-  .dropdown-menu {
-    width: 100%;
+  .container {
+    padding: 5px;
+    font-size: 14px;
   }
 }
+
+/* For iPhone SE/5/5S */
+@media (max-width: 320px) {
+    .container {
+      padding: 5px;
+      font-size: 12px;
+      /* Add other styles specific to this width */
+    }
+  }
+  
+  /* For iPhone 6/7/8/X/11/12/13 Mini */
+  @media (max-width: 375px) {
+    .container {
+      padding: 10px;
+      font-size: 14px;
+      /* Add other styles specific to this width */
+    }
+  }
+  
+  /* For iPhone 6+/7+/8+/X/11/12/13 Pro */
+  @media (max-width: 414px) {
+    .container {
+      padding: 15px;
+      font-size: 16px;
+      /* Add other styles specific to this width */
+    }
+  }
+  
